@@ -14,11 +14,6 @@ import (
 
 func Register(email string, pass []byte, name string) error {
 
-	// password, err := bcrypt.GenerateFromPassword(pass, 14) //GenerateFromPassword returns the bcrypt hash of the password at the given cost i.e. (14 in our case).
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-
 	user := model.User{
 		UserID:   "unique()",
 		Email:    fmt.Sprintf("%s", email),
@@ -27,7 +22,6 @@ func Register(email string, pass []byte, name string) error {
 	}
 
 	payload, err := json.Marshal(user)
-	// fmt.Println(bytes.NewBuffer(payload))
 	if err != nil {
 		log.Fatalln("Failed to marshal user data:", err)
 		return nil
@@ -57,19 +51,13 @@ func Register(email string, pass []byte, name string) error {
 	}
 
 	defer resp.Body.Close()
-	// fmt.Println(resp)
 
 	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
 		log.Fatalln("Failed to create user. Status code:", resp.StatusCode)
 		return nil
 	}
 
-	// fmt.Println("User created successfully")
-	println(resp.Proto == "HTTP/1.1")
-
 	Login(email, string(pass))
-
-	// JWT()
 
 	return nil
 }

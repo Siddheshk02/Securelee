@@ -15,10 +15,10 @@ var whoamiCmd = &cobra.Command{
 	Short: "A Command to see the Current logged-in User.",
 	Long:  `A Command to see the Current logged-in User.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		res := auth.Check()
+		_, res := auth.Check()
 		c := color.New(color.FgYellow)
 
-		c.Println(res + "\n")
+		c.Println("\n> " + res + "\n")
 	},
 }
 

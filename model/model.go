@@ -20,6 +20,8 @@ type Data11 struct {
 
 type Data12 struct {
 	Code         string `json:"code"`
+	Uploadedby   string `json:"uploaded_by"`
+	Filename     string `json:"file"`
 	Downloadedby string `json:"downloaded_by"`
 }
 
@@ -33,4 +35,9 @@ type Download struct {
 	DocID       string   `json:"documentId"`
 	Data1       Data12   `json:"data"`
 	Permissions []string `json:"permissions"`
+}
+
+type Response struct {
+	Total     int    `json:"total"`
+	Documents Data11 `json:"documents"`
 }

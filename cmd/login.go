@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/Siddheshk02/Securelee/auth"
+	"github.com/Siddheshk02/Securelee/lib"
 	"github.com/apoorvam/goterminal"
 	ct "github.com/daviddengcn/go-colortext"
 	"github.com/fatih/color"
@@ -20,12 +21,20 @@ import (
 // loginCmd represents the login command
 var loginCmd = &cobra.Command{
 	Use:   "login",
-	Short: "\nLogin to Securelee using your browser.",
-	Long:  `\nLogin to Securelee using your browser.`,
+	Short: "Login to Securelee using your browser.",
+	Long:  `Login to Securelee using your browser.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		var email string
-		// var password string
+		bl, re := auth.Check()
 		c := color.New(color.FgYellow)
+
+		if bl {
+			c.Println("\n> " + re)
+			c.Println("\n> Log-out to log-in/Sign-up with other Email.")
+			c.Print("\n")
+			os.Exit(1)
+		}
+		var email string
+
 		c.Print("\n> Enter the Username (Email) : \n> ")
 		fmt.Scanf("%s\n", &email)
 		if len(strings.TrimSpace(email)) == 0 {
@@ -45,6 +54,15 @@ var loginCmd = &cobra.Command{
 		}
 		fmt.Print("\n")
 
+		code := lib.Mail(email)
+		var check int
+		c.Print("> To Verify the Email Address enter the code sent on the entered email address : ")
+		fmt.Scanf("%d\n", &check)
+		if check != code {
+			c.Println("Invalid Code Entered!")
+			os.Exit(1)
+		}
+
 		writer := goterminal.New(os.Stdout)
 		ct.Foreground(ct.Yellow, false)
 		for i := 0; i < 100; i = i + 10 {
@@ -59,11 +77,13 @@ var loginCmd = &cobra.Command{
 		}
 		writer.Reset()
 
+		ct.Foreground(ct.Magenta, false)
+
 		res := auth.Login(email, string(password))
 		_ = res
 
-		ct.Foreground(ct.Magenta, false)
-		fmt.Println("Done!!")
+		c = color.Set(color.FgCyan)
+		c.Println("Verified!!")
 		ct.ResetColor()
 	},
 }

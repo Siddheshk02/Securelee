@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/Siddheshk02/Securelee/auth"
+	"github.com/Siddheshk02/Securelee/lib"
 	"github.com/apoorvam/goterminal"
 	ct "github.com/daviddengcn/go-colortext"
 	"github.com/fatih/color"
@@ -20,13 +21,23 @@ import (
 // SignUpCmd represents the SignUp command
 var SignUpCmd = &cobra.Command{
 	Use:   "SignUp",
-	Short: "\nSign-up to Securelee using your browser.",
-	Long:  `\nSign-up to Securelee using your browser.`,
+	Short: "Sign-up to Securelee using your browser.",
+	Long:  `Sign-up to Securelee using your browser.`,
 	Run: func(cmd *cobra.Command, args []string) {
+
+		bl, re := auth.Check()
+		c := color.New(color.FgYellow)
+
+		if bl {
+			c.Println("\n> " + re)
+			c.Println("\n> Log-out to log-in/Sign-up with other Email.")
+			c.Print("\n")
+			os.Exit(1)
+		}
 
 		var email, name string
 		// var password string
-		c := color.New(color.FgYellow)
+
 		c.Print("\n> Enter the Email : \n> ")
 		fmt.Scanf("%s\n", &email)
 		if len(strings.TrimSpace(email)) == 0 {
@@ -43,7 +54,6 @@ var SignUpCmd = &cobra.Command{
 			fmt.Println("Enter a Valid Password!")
 			goto reenter
 		}
-		// password = strconv.Atoi(string(password))
 
 		c.Print("\n> Enter the Username : \n> ")
 		fmt.Scanf("%s\n", &name)
@@ -55,6 +65,14 @@ var SignUpCmd = &cobra.Command{
 
 		fmt.Print("\n")
 		//add the email verification step here
+		code := lib.Mail(email)
+		var check int
+		c.Print("> To Verify the Email Address enter the code sent on the entered email address : ")
+		fmt.Scanf("%d\n", &check)
+		if check != code {
+			c.Println("Invalid Code Entered!")
+			os.Exit(1)
+		}
 
 		writer := goterminal.New(os.Stdout)
 		ct.Foreground(ct.Yellow, false)
@@ -68,18 +86,20 @@ var SignUpCmd = &cobra.Command{
 				fmt.Fprintf(writer, "> Adding data (%d/100) ......\n", i)
 			}
 
-			// write to terminal
 			writer.Print()
 			time.Sleep(time.Millisecond * 200)
 
-			// clear the text written by the previous write, so that it can be re-written.
 			writer.Clear()
 		}
 		writer.Reset()
+
+		ct.Foreground(ct.Magenta, false)
+
 		res := auth.Register(email, password, name)
 		_ = res
-		ct.Foreground(ct.Magenta, false)
-		fmt.Println("Done!!")
+
+		c = color.Set(color.FgCyan)
+		c.Println("Verified!!")
 		ct.ResetColor()
 	},
 }

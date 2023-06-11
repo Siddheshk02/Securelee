@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func Check() string {
+func Check() (bool, string) {
 
 	var cookieData string
 	currentUser, err := user.Current()
@@ -22,7 +22,7 @@ func Check() string {
 
 	file, err := ioutil.ReadFile(sessionPath)
 	if err != nil {
-		return "No User logged in. Log in to Securelee"
+		return false, "No User logged in. Log in to Securelee"
 	}
 	err = json.Unmarshal(file, &cookieData)
 	if err != nil {
@@ -37,7 +37,6 @@ func Check() string {
 			break
 		}
 	}
-	// fmt.Println(cookieParts[0])
 
 	expires = strings.TrimSpace(expires)
 	expires = strings.TrimPrefix(expires, "expires=")
@@ -48,46 +47,18 @@ func Check() string {
 	}
 
 	isExpired := time.Now().After(expirationTime)
-	// fmt.Println(isExpired)
 
 	if isExpired {
-		return "Session is expired. Log in to Securelee."
+		return false, "Session is expired. Log in to Securelee."
 	}
 
-	// os.Setenv("GODEBUG", "http2client=0")
-
-	// req, err := http.NewRequest("GET", "https://cloud.appwrite.io/v1/account", nil)
-	// if err != nil {
-	// 	log.Fatalln("Failed to create request:", err)
-	// }
-
-	// req.Header = http.Header{
-	// 	"Content-Type":       {"application/json"},
-	// 	"X-Appwrite-Project": {"64664ea036f955c9205f"},
-	// }
-	// req.Header.Set("Cookie", cookieParts[0])
-
-	// client1 := &http.Client{}
-	// resp, err := client1.Do(req)
-
-	// if err != nil {
-	// 	log.Fatalln("Failed to make request:", err)
-	// }
-
-	// defer resp.Body.Close()
-	// // fmt.Println(resp)
-
-	// if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
-	// 	log.Fatalln("Status code:", resp.StatusCode)
-	// }
-	// println(resp.Proto == "HTTP/1.1")
 	fileName := currentUser.HomeDir + "/securelee/user.txt"
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		log.Panicf("failed reading data from file: %s", err)
 	}
 
-	return "Logged In as " + string(data)
+	return true, "Logged In as " + string(data)
 }
 
 func Logout() string {

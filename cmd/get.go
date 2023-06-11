@@ -5,8 +5,11 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/Siddheshk02/Securelee/auth"
 	"github.com/Siddheshk02/Securelee/lib"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -17,13 +20,23 @@ var getCmd = &cobra.Command{
 	Long:  `Enter the Code -> Get the File.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		//fmt.Println("Get called")
+		bl, _ := auth.Check()
+		c := color.New(color.FgYellow)
+
+		if !bl {
+			c.Println("\n> No User Logged-in.")
+			c.Println("\n> Log-in or Sign-up to Securelee to continue.")
+			c.Print("\n")
+			os.Exit(1)
+		}
+
 		var code int
-		fmt.Print("\n> Enter the code : ")
+		c.Print("\n> Enter the code : ")
 		fmt.Scanf("%d\n", &code)
 
 		res := lib.Download(code)
 
-		fmt.Print(res + "\n\n")
+		c.Print("\n> " + res + "\n\n")
 	},
 }
 

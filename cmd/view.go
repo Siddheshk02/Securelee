@@ -7,17 +7,17 @@ import (
 	"os"
 
 	"github.com/Siddheshk02/Securelee/auth"
+	"github.com/Siddheshk02/Securelee/lib"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
-// logoutCmd represents the logout command
-var logoutCmd = &cobra.Command{
-	Use:   "logout",
-	Short: "Command to Logout Securelee.",
-	Long:  `Command to Logout Securelee.`,
+// viewCmd represents the view command
+var viewCmd = &cobra.Command{
+	Use:   "view",
+	Short: "Get list of Files Shared by you.",
+	Long:  `Get list of Files Shared by you.`,
 	Run: func(cmd *cobra.Command, args []string) {
-
 		bl, _ := auth.Check()
 		c := color.New(color.FgYellow)
 
@@ -28,23 +28,21 @@ var logoutCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		res := auth.Logout()
-
-		c.Println("\n> " + res + "\n")
+		lib.View()
 
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(logoutCmd)
+	rootCmd.AddCommand(viewCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// logoutCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// viewCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// logoutCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// viewCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

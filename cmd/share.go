@@ -5,8 +5,11 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/Siddheshk02/Securelee/auth"
 	"github.com/Siddheshk02/Securelee/lib"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -16,13 +19,25 @@ var shareCmd = &cobra.Command{
 	Short: "Share a File",
 	Long:  `Upload a File -> Get a code -> Share the code with others.`,
 	Run: func(cmd *cobra.Command, args []string) {
+
+		bl, _ := auth.Check()
+		c := color.New(color.FgYellow)
+
+		if !bl {
+			c.Println("\n> No User Logged-in.")
+			c.Println("\n> Log-in or Sign-up to Securelee to continue.")
+			c.Print("\n")
+			os.Exit(1)
+		}
+
 		var file string
-		fmt.Print("\n> Enter the File-Path of the File to be Uploaded : ")
+		c.Print("\n> Enter the File-Path of the File to be Uploaded : ")
 		fmt.Scanf("%s\n", &file)
 
 		res := lib.Upload(file)
 
-		fmt.Println(res)
+		c.Println("\n> " + res)
+		fmt.Print("\n")
 
 	},
 }
