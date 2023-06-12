@@ -15,8 +15,8 @@ import (
 // downloadsCmd represents the downloads command
 var downloadsCmd = &cobra.Command{
 	Use:   "downloads",
-	Short: "User who downloaded the Files shared by you",
-	Long:  `User who downloaded the Files shared by you.`,
+	Short: "Get the list of Users who downloaded the Files shared by you",
+	Long:  `Get the list of Users who downloaded the Files shared by you.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// fmt.Println("downloads called")
 		bl, _ := auth.Check()

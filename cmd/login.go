@@ -21,8 +21,8 @@ import (
 // loginCmd represents the login command
 var loginCmd = &cobra.Command{
 	Use:   "login",
-	Short: "Login to Securelee using your browser.",
-	Long:  `Login to Securelee using your browser.`,
+	Short: "Login to Securelee using your email.",
+	Long:  `Login to Securelee using your email.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		bl, re := auth.Check()
 		c := color.New(color.FgYellow)

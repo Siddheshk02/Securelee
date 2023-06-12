@@ -14,8 +14,8 @@ import (
 // logoutCmd represents the logout command
 var logoutCmd = &cobra.Command{
 	Use:   "logout",
-	Short: "Command to Logout Securelee.",
-	Long:  `Command to Logout Securelee.`,
+	Short: "Command to Logout of Securelee.",
+	Long:  `Command to Logout of Securelee.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		bl, _ := auth.Check()
