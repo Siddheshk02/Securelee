@@ -64,7 +64,6 @@ var SignUpCmd = &cobra.Command{
 		}
 
 		fmt.Print("\n")
-		//add the email verification step here
 		code := lib.Mail(email)
 		var check int
 		c.Print("> To Verify the Email Address enter the code sent on the entered email address : ")
