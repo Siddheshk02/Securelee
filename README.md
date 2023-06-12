@@ -70,7 +70,7 @@ Use "Securelee [command] --help" for more information about a command.
 ## `Securelee SignUp`
 
 ```
-Sign-up to Securelee using your browser.
+Sign-up to Securelee using your email.
 
 Usage:
   Securelee SignUp [flags]
