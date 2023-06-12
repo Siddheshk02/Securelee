@@ -21,8 +21,8 @@ import (
 // SignUpCmd represents the SignUp command
 var SignUpCmd = &cobra.Command{
 	Use:   "SignUp",
-	Short: "Sign-up to Securelee using your browser.",
-	Long:  `Sign-up to Securelee using your browser.`,
+	Short: "Sign-up to Securelee using your email.",
+	Long:  `Sign-up to Securelee using your email.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		bl, re := auth.Check()
