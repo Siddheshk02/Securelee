@@ -76,7 +76,6 @@ var SignUpCmd = &cobra.Command{
 		writer := goterminal.New(os.Stdout)
 		ct.Foreground(ct.Yellow, false)
 		for i := 0; i < 100; i = i + 10 {
-			// add your text to writer's buffer
 			if i < 35 {
 				fmt.Fprintf(writer, "> Authenticating (%d/100) ......\n", i)
 			} else if i >= 35 && i < 70 {
