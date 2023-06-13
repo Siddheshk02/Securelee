@@ -1,5 +1,9 @@
 # Securelee 🔐
 
+![](https://img.shields.io/github/license/Siddheshk02/Securelee?style=plastic)
+![](https://img.shields.io/github/go-mod/go-version/Siddheshk02/Securelee)
+![](https://img.shields.io/github/downloads-pre/Siddheshk02/Securelee/v0.1.3/total)
+
 A Open Source CLI tool built using Golang and Appwrite Cloud for Sharing Files Safely.
 
 ## 💻 Tech Stack :
