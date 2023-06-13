@@ -181,3 +181,5 @@ Flags:
   -h, --help   help for logout
 ```
  
+ ## Support
+Do support by giving a 🌟 to Securelee.
