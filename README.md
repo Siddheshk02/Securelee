@@ -6,6 +6,8 @@
 
 A Open Source CLI tool built using Golang and Appwrite Cloud for Sharing Files Safely.
 
+![image](https://github.com/Siddheshk02/Securelee/assets/90148705/fbbc1627-46ec-4816-9460-28a9b4fa04f5)
+
 ## 💻 Tech Stack :
 - [Golang](https://go.dev/)
 - [Appwrite](https://appwrite.io/)
